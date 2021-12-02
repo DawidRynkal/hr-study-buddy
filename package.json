@@ -9,6 +9,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "styled-components": "^5.3.3",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -17,16 +18,16 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
- "lint-staged": {
-     "src/**/*.{js,jsx,ts,tsx,json}": [
-       "prettier --write"
-     ]
-   },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json}": [
+      "prettier --write"
+    ]
+  },
   "husky": {
-      "hooks": {
-        "pre-commit": "lint-staged"
-      }
-    },
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",

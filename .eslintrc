@@ -10,10 +10,11 @@
     ],
     "rules": {
         "prettier/prettier": [
-            "error",
+            "warn",
             {
                 "singleQuote": true,
-                "endOfLine": "auto"
+                "endOfLine": "auto",
+                "printWidth": 150
             }
         ]
     },
