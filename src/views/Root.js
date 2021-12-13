@@ -1,63 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/themes';
 import { Wrapper } from './Root.styles';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { users as usersData } from 'data/users';
 import MainTemplate from 'components/templates/MainTemplate/MainTemplate';
 import AddUser from 'views/AddUser';
 import Dashboard from 'views/Dashboard';
-
-const initialFormState = {
-  name: '',
-  attendance: '',
-  average: '',
-};
+import UsersProvider from 'providers/UsersProvider';
 
 const Root = () => {
-  const [users, setUsers] = useState(usersData);
-  const [formValues, setFormValue] = useState(initialFormState);
-
-  const deleteUser = (name) => {
-    const filteredUsers = users.filter((user) => user.name !== name);
-    setUsers(filteredUsers);
-  };
-
-  const handleInputChange = (e) => {
-    console.log(formValues);
-    setFormValue({
-      ...formValues,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleAddUser = (e) => {
-    e.preventDefault();
-    const newUser = {
-      name: formValues.name,
-      attendance: formValues.attendance,
-      average: formValues.average,
-    };
-
-    setUsers([newUser, ...users]);
-    setFormValue(initialFormState);
-  };
-
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <MainTemplate>
-          <Wrapper>
-            <Routes>
-              <Route
-                path="/add-user"
-                element={<AddUser formValues={formValues} handleAddUser={handleAddUser} handleInputChange={handleInputChange} />}
-              />
-              <Route path="/" element={<Dashboard deleteUser={deleteUser} users={users} />} />
-            </Routes>
-          </Wrapper>
+          <UsersProvider>
+            <Wrapper>
+              <Routes>
+                <Route path="/add-user" element={<AddUser />} />
+                <Route path="/" element={<Dashboard />} />
+              </Routes>
+            </Wrapper>
+          </UsersProvider>
         </MainTemplate>
       </ThemeProvider>
     </Router>
