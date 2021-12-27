@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsersListItem from 'components/molecules/StudentsListItem/StudentsListItem';
 import { StyledList } from './StudentsList.styles';
@@ -7,9 +7,18 @@ import { Title } from 'components/atoms/Title/Title';
 import { useStudents } from 'hooks/useStudents';
 import { useParams } from 'react-router-dom';
 
-const UsersList = () => {
+const StudentsList = () => {
   const { id } = useParams();
-  const { students } = useStudents({ groupId: id });
+  const { getStudents } = useStudents();
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const students = await getStudents(id);
+      setStudents(students);
+    })();
+  }, [getStudents, id]);
+
   return (
     <>
       <Title>Students list</Title>
@@ -22,9 +31,9 @@ const UsersList = () => {
   );
 };
 
-UsersList.propTypes = {
+StudentsList.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape(UserShape)),
   deleteUser: PropTypes.func,
 };
 
-export default UsersList;
+export default StudentsList;
