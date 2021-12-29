@@ -7,33 +7,33 @@ import { Title } from 'components/atoms/Title/Title';
 import { useStudents } from 'hooks/useStudents';
 import { useParams } from 'react-router-dom';
 
-const StudentsList = () => {
-  const { id } = useParams();
-  const { getStudents } = useStudents();
+const StudentsList = ({ handleOpenStudent }) => {
   const [students, setStudents] = useState([]);
+  const { id } = useParams();
+  const { getStudentsByGroup } = useStudents([]);
 
   useEffect(() => {
     (async () => {
-      const students = await getStudents(id);
+      const students = await getStudentsByGroup(id);
       setStudents(students);
     })();
-  }, [getStudents, id]);
-
+  }, [getStudentsByGroup, id]);
+  console.log(students);
   return (
     <>
       <Title>Students list</Title>
       <StyledList>
         {students.map((userData) => (
-          <UsersListItem key={userData.name} userData={userData} />
+          <UsersListItem onClick={() => handleOpenStudent(userData.id)} key={userData.name} userData={userData} />
         ))}
       </StyledList>
     </>
   );
 };
 
-StudentsList.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape(UserShape)),
-  deleteUser: PropTypes.func,
-};
+// StudentsList.propTypes = {
+//   users: PropTypes.arrayOf(PropTypes.shape(UserShape)),
+//   deleteUser: PropTypes.func,
+// };
 
 export default StudentsList;
