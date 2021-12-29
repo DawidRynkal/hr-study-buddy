@@ -18,7 +18,6 @@ const StudentsList = ({ handleOpenStudent }) => {
       setStudents(students);
     })();
   }, [getStudentsByGroup, id]);
-  console.log(students);
   return (
     <>
       <Title>Students list</Title>
@@ -31,9 +30,9 @@ const StudentsList = ({ handleOpenStudent }) => {
   );
 };
 
-// StudentsList.propTypes = {
-//   users: PropTypes.arrayOf(PropTypes.shape(UserShape)),
-//   deleteUser: PropTypes.func,
-// };
+StudentsList.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.shape(UserShape)),
+  deleteUser: PropTypes.func,
+};
 
 export default StudentsList;
