@@ -11,6 +11,9 @@ html {
 }
 body {
     font-family: 'Montserrat', sans-serif;
+    padding: 0;
+    margin: 0;
+    overflow-y: hidden;
 }
 
 a, button {

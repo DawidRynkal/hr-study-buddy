@@ -8,6 +8,8 @@ import FormField from 'components/molecules/FormField/FormField';
 import { Button } from 'components/atoms/Button/Button';
 import { useForm } from 'react-hook-form';
 import { useAuth } from 'hooks/useAuth';
+import { useError } from 'hooks/useError';
+import ErrorMessage from 'components/molecules/ErrorMessage/ErrorMessage';
 
 const AuthenticationApp = () => {
   return (
@@ -33,11 +35,10 @@ const UnAuthenticationApp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = ({ login, password }) => auth.signIn({ login, password });
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(auth.signIn)}
       style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', height: '100vh' }}
     >
       <FormField label="login" name="login" id="login" {...register('login')} />
@@ -50,7 +51,13 @@ const UnAuthenticationApp = () => {
 
 const Root = () => {
   const auth = useAuth();
+  const { error } = useError();
 
-  return auth.user ? <AuthenticationApp /> : <UnAuthenticationApp />;
+  return (
+    <>
+      {error ? <ErrorMessage /> : null}
+      {auth.user ? <AuthenticationApp /> : <UnAuthenticationApp />}
+    </>
+  );
 };
 export default Root;
